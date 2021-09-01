@@ -8,6 +8,7 @@ from PIL import Image
 import io
 import base64
 import os
+import csv
 
 from prediction import predict_image
 
@@ -18,7 +19,7 @@ from prediction import predict_image
 THUMBNAIL_SIZE = (200,200)
 IMAGE_SIZE = (600,600)
 THUMBNAIL_PAD = (1,1)
-#PRISTINE_AREA=1
+data = []
 
 
 def make_square(im, min_size=256, fill_color=(0, 0, 0, 0)):
@@ -69,13 +70,23 @@ def display_image_window(filename, window):
         print('** Display image error **', e)
         return
 
-def save_to_csv_file():
-    # Save the current values to a csv file
-    # each line should contain 
-    # filename, SR ratio, PRISTINE_VALUE
-    # 
-    pass
+def save_to_csv_file(data):
+
+
+    header = ['sample', 'solder area', 'prsistine area', 'solder_ratio']
     
+
+    with open('results.csv', 'w', encoding='UTF8') as f:
+        writer = csv.writer(f)
+
+        # write the header
+        writer.writerow(header)
+
+        # write the data
+        for sample in data:
+            writer.writerow(sample)
+    
+        
 
 
 
@@ -101,6 +112,9 @@ def main():
         [
             sg.Button("PREDICT")
             ],
+        [
+            sg.Button("SAVE")
+            ],
     ]
 
     # For now will only show the name of the file that was chosen
@@ -115,7 +129,7 @@ def main():
     result_viewer_column = [
         [sg.Text("Prediction from Input:")],
         [sg.Text(size=(80,1), key="-RESULT_TOUT-")],
-        [sg.Text(size=(40,1), key="-RESULT_TOUT_SR-")],
+        [sg.Text(size=(80,1), key="-RESULT_TOUT_SR-")],
         [sg.Image(key="-RESULT-")],
         [sg.Button(button_text="Set Pristine", key="-SAVE-PRISTINE-")],
     ]
@@ -184,9 +198,13 @@ def main():
             window["-RESULT_TOUT-"].update("The area of the solder area + transition is {} Pixels".format(count_area))
             window["-RESULT_TOUT_SR-"].update("The Solder Ratio (Solder_Spread/Pristine) is {}".format(count_area/PRISTINE_AREA))
             window["-RESULT-"].update(data=convert_to_bytes(image, IMAGE_SIZE))
+            data.append([filename,count_area,PRISTINE_AREA, count_area/PRISTINE_AREA])
         
         elif event == "-SAVE-PRISTINE-":
             PRISTINE_AREA=count_area
+
+        elif event == "SAVE":
+            save_to_csv_file(data)
 
 
 

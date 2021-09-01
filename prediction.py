@@ -17,12 +17,6 @@ try:
 except ImportError:
     accimage = None
 
-def _is_pil_image(img):
-    if accimage is not None:
-        return isinstance(img, (Image.Image, accimage.Image))
-    else:
-        return isinstance(img, Image.Image)
-
 
 def _is_tensor_image(img):
     return torch.is_tensor(img) and img.ndimension() == 3

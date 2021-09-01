@@ -1,0 +1,3 @@
+sample,solder area,prsistine area,solder_ratio
+/home/plasmalab/Documents/Moritz/04_segmentation/pytorch-deeplab-xception/test_images/OriginalA3.jpg,245552,245552,1.0
+/home/plasmalab/Documents/Moritz/04_segmentation/pytorch-deeplab-xception/test_images/OriginalA2 (5).jpg,330645,245552,1.3465375969244804
