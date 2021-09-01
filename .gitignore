@@ -1,0 +1,7 @@
+# no weights
+
+*.tar
+*.pth
+
+venv/
+
