@@ -12,6 +12,84 @@ from torchvision import transforms
 from dataloaders.utils import  *
 from torchvision.utils import make_grid, save_image
 
+try:
+    import accimage
+except ImportError:
+    accimage = None
+
+def _is_pil_image(img):
+    if accimage is not None:
+        return isinstance(img, (Image.Image, accimage.Image))
+    else:
+        return isinstance(img, Image.Image)
+
+
+def _is_tensor_image(img):
+    return torch.is_tensor(img) and img.ndimension() == 3
+
+
+def _is_numpy_image(img):
+    return isinstance(img, np.ndarray) and (img.ndim in {2, 3})
+
+def to_pil_image(pic):
+    """Convert a tensor or an ndarray to PIL Image.
+
+    See ``ToPIlImage`` for more details.
+
+    Args:
+        pic (Tensor or numpy.ndarray): Image to be converted to PIL Image.
+
+    Returns:
+        PIL Image: Image converted to PIL Image.
+    """
+    if not(_is_numpy_image(pic) or _is_tensor_image(pic)):
+        raise TypeError('pic should be Tensor or ndarray. Got {}.'.format(type(pic)))
+
+    npimg = pic
+    mode = None
+    if isinstance(pic, torch.FloatTensor):
+        pic = pic.mul(255).byte()
+    if torch.is_tensor(pic):
+        npimg = np.transpose(pic.numpy(), (1, 2, 0))
+    assert isinstance(npimg, np.ndarray)
+    if npimg.shape[2] == 1:
+        npimg = npimg[:, :, 0]
+
+        if npimg.dtype == np.uint8:
+            mode = 'L'
+        if npimg.dtype == np.int16:
+            mode = 'I;16'
+        if npimg.dtype == np.int32:
+            mode = 'I'
+        elif npimg.dtype == np.float32:
+            mode = 'F'
+    elif npimg.shape[2] == 4:
+            if npimg.dtype == np.uint8:
+                mode = 'RGBA'
+    else:
+        if npimg.dtype == np.uint8:
+            mode = 'RGB'
+    assert mode is not None, '{} is not supported'.format(npimg.dtype)
+    return Image.fromarray(npimg, mode=mode)
+
+def evaluate_solder_spread(img_path):
+    # find the predicted area of solder spreading (1-black pixels)
+    count=0
+    black=0
+    im = Image.open(img_path)
+    #im=transforms.ToPILImage(grid_image)
+    #im=to_pil_image(grid_image)
+    for pixel in im.getdata():
+        count+=1
+        if pixel == (0, 0, 0):
+            black+=1
+
+    solder_spread=count-black
+    print("Total amount of Pixels {}".format(count))
+    print("Background Pixels: {}".format(black))
+
+    return solder_spread
+
 
 def predict_image(input_image):
     parser = argparse.ArgumentParser(description="PyTorch DeeplabV3Plus Training")
@@ -82,11 +160,11 @@ def predict_image(input_image):
     out_path="result_image.png"
     save_image(grid_image, out_path)
 
+    solder_spread=evaluate_solder_spread(out_path)
 
-    pixel_classes, pixel_counts = np.unique(grid_image, return_counts=True)
-    solder_area_total = pixel_counts[1] + pixel_counts[2]
+    #os.remove(out_path)
 
-    return out_path , solder_area_total
+    return out_path , solder_spread
 
 
 

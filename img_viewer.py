@@ -18,6 +18,7 @@ from prediction import predict_image
 THUMBNAIL_SIZE = (200,200)
 IMAGE_SIZE = (600,600)
 THUMBNAIL_PAD = (1,1)
+#PRISTINE_AREA=1
 
 
 def make_square(im, min_size=256, fill_color=(0, 0, 0, 0)):
@@ -67,6 +68,13 @@ def display_image_window(filename, window):
     except Exception as e:
         print('** Display image error **', e)
         return
+
+def save_to_csv_file():
+    # Save the current values to a csv file
+    # each line should contain 
+    # filename, SR ratio, PRISTINE_VALUE
+    # 
+    pass
     
 
 
@@ -106,8 +114,10 @@ def main():
 
     result_viewer_column = [
         [sg.Text("Prediction from Input:")],
-        [sg.Text(size=(40,1), key="-RESULT_TOUT-")],
+        [sg.Text(size=(80,1), key="-RESULT_TOUT-")],
+        [sg.Text(size=(40,1), key="-RESULT_TOUT_SR-")],
         [sg.Image(key="-RESULT-")],
+        [sg.Button(button_text="Set Pristine", key="-SAVE-PRISTINE-")],
     ]
 
 
@@ -164,9 +174,21 @@ def main():
         
         elif event == "PREDICT":
             image, count_area = predict_image(filename)
+
+            #check if pristine area exists
+            try:
+                PRISTINE_AREA 
+            except NameError:
+                PRISTINE_AREA = count_area 
             
-            window["-RESULTOUT-"].update(filename)
+            window["-RESULT_TOUT-"].update("The area of the solder area + transition is {} Pixels".format(count_area))
+            window["-RESULT_TOUT_SR-"].update("The Solder Ratio (Solder_Spread/Pristine) is {}".format(count_area/PRISTINE_AREA))
             window["-RESULT-"].update(data=convert_to_bytes(image, IMAGE_SIZE))
+        
+        elif event == "-SAVE-PRISTINE-":
+            PRISTINE_AREA=count_area
+
+
 
 
 
