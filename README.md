@@ -34,6 +34,5 @@ All Image rights belong to NTUST.
 
 # GUI
 
-We also share our GUI 
+We also share our GUI. How to use the GUI can be seen here: https://youtu.be/cGnSzOiCfyI
 
-[![GUI](http://i.imgur.com/Ot5DWAW.png)](https://youtu.be/cGnSzOiCfyI "GUI")
