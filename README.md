@@ -1,5 +1,11 @@
 # Solder Segmentation
-This repository is part of the publication regarding segmenting solder joints via image segmentation methods
+This repository is part of the publication regarding segmenting solder joints via image segmentation methods.
+
+Take a look at the input image:
+
+![Input Image](https://github.com/mojoee/soldersegmentation/blob/master/img.png "Input Image")
+
+and now take a look at our resulting segmentation map:
 
 ![Sample Segmentation](https://github.com/mojoee/soldersegmentation/blob/master/result_image.png "Solder Segmentation")
 
@@ -35,6 +41,7 @@ All Image rights belong to NTUST.
 # GUI
 
 We also share our GUI. How to use the GUI can be seen here: https://youtu.be/cGnSzOiCfyI
+
 To use the GUI, you need to download some of our trained weights from here: https://drive.google.com/file/d/1pgx7AeYF3tjkKXZnKrZKhoD8J35A7-Qo/view?usp=sharing
 
 
