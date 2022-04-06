@@ -1,7 +1,7 @@
 # Solder Segmentation
 This repository is part of the publication regarding segmenting solder joints via image segmentation methods
 
-![Alt text](/relative/path/to/img.jpg?raw=true "Solder Segmentation")
+![Alt text](/mojoee/soldersegmentation/result_image.png?raw=true "Solder Segmentation")
 
 # Dataset
 
