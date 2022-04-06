@@ -44,4 +44,4 @@ We also share our GUI. How to use the GUI can be seen here: https://youtu.be/cGn
 
 To use the GUI, you need to download some of our trained weights from here: https://drive.google.com/file/d/1pgx7AeYF3tjkKXZnKrZKhoD8J35A7-Qo/view?usp=sharing
 
-
+To run the gui, run the img_viewer.py file
