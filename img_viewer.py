@@ -1,6 +1,7 @@
 # this file will show the image
 
 
+from cmath import e
 import PySimpleGUI as sg
 import os.path
 import PIL
@@ -117,7 +118,6 @@ def main():
             ],
     ]
 
-    # For now will only show the name of the file that was chosen
 
     image_viewer_column = [
         [sg.Text("Choose an image from list on left:")],
@@ -201,7 +201,11 @@ def main():
             data.append([filename,count_area,PRISTINE_AREA, count_area/PRISTINE_AREA])
         
         elif event == "-SAVE-PRISTINE-":
-            PRISTINE_AREA=count_area
+            try:
+                PRISTINE_AREA=count_area
+            except:
+                print("Please predict image first")
+                
 
         elif event == "SAVE":
             save_to_csv_file(data)

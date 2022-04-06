@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['img_viewer.py'],
-             pathex=['/home/plasmalab/Documents/Moritz/04_segmentation/pytorch-deeplab-xception/GUI'],
+             pathex=['/home/plasmalab/Documents/Moritz/04_segmentation/GUI_Spreading_Ratio/GUI'],
              binaries=[],
              datas=[],
              hiddenimports=[],
