@@ -40,7 +40,7 @@ All Image rights belong to NTUST.
 
 # GUI
 
-We also share our GUI. How to use the GUI can be seen here: https://youtu.be/cGnSzOiCfyI
+We also share our GUI. How to use the GUI can be seen here: [https://youtu.be/cGnSzOiCfyI](https://youtu.be/cGnSz0iCfyI)
 
 To use the GUI, you need to download some of our trained weights from here: https://drive.google.com/file/d/1pgx7AeYF3tjkKXZnKrZKhoD8J35A7-Qo/view?usp=sharing
 
